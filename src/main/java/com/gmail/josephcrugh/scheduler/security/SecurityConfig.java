@@ -1,6 +1,6 @@
 package com.gmail.josephcrugh.scheduler.security;
 
-import com.gmail.josephcrugh.scheduler.registration.db.RegisteredUsersService;
+import com.gmail.josephcrugh.scheduler.registration.RegisteredUsersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,12 +28,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // Path authorization
                 .authorizeRequests()
                     .antMatchers("/register").permitAll()
-                    .antMatchers("/*").hasRole("user")
+                    .antMatchers("*").hasRole("user")
                 .anyRequest()
                 .authenticated()
                 .and()
                 .formLogin()
-                    .successHandler(new SuccessLoginHandler())
                     .loginPage("/login")
                     .permitAll()
         ;

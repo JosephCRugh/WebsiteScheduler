@@ -1,7 +1,6 @@
 package com.gmail.josephcrugh.scheduler.registration;
 
 import com.gmail.josephcrugh.scheduler.registration.db.RegisteredUser;
-import com.gmail.josephcrugh.scheduler.registration.db.RegisteredUsersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;

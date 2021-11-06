@@ -1,0 +1,6 @@
+<div th:fragment="disTime(st, et)" xmlns:th="http://www.w3.org/1999/xhtml">
+    <label th:with="stH=${st.getHour()%12}, etH=${et.getHour()%12}, stM=${st.getMinute()}, etM=${et.getMinute()}">
+        [[${stH} < 10 ? '0' : '']][[${stH}]]:[[${stM} < 10 ? '0' : '']][[${stM}]] [[${st.getHour()>12 ? 'PM' : 'AM'}]] -
+        [[${etH} < 10 ? '0' : '']][[${etH}]]:[[${etM} < 10 ? '0' : '']][[${etM}]] [[${et.getHour()>12 ? 'PM' : 'AM'}]]
+    </label>
+</div>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Available Times</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+    <script type="text/javascript" th:src="@{/js/create.js}"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-2 border rounded">
+            <form th:fragment="add-form-fragment" id="add-form" onsubmit="addTime(event)" th:action="@{/schedule/create/add}"
+                  th:object="${availableDateTime}">
+
+                <div th:if="${availableDateTime}">
+                    <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger" id="error-display">
+                        <p th:with="err=${#fields.errors[0]}" th:text="${err}"></p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <label>Day:</label>
+                    <select id="day" name="day" class="form-control">
+                        <option value="MONDAY">Monday</option>
+                        <option value="TUESDAY">Tuesday</option>
+                        <option value="WEDNESDAY">Wednesday</option>
+                        <option value="THURSDAY">Thursday</option>
+                        <option value="FRIDAY">Friday</option>
+                        <option value="SATURDAY">Saturday</option>
+                        <option value="SUNDAY">Sunday</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <label>Start Time:</label>
+                    <input id="start-time" type="time" name="startTime" class="form-control">
+                </div>
+                <div class="row">
+                    End Time:
+                    <input id="end-time" type="time" name="endTime" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary mt-2">Add Time</button>
+            </form>
+        </div>
+        <div class="col border rounded">
+            <div class="row">
+                <label class="col border">Monday</label>
+                <label class="col border">Tuesday</label>
+                <label class="col border">Wednesday</label>
+                <label class="col border">Thursday</label>
+                <label class="col border">Friday</label>
+                <label class="col border">Saturday</label>
+                <label class="col border">Sunday</label>
+            </div>
+            <div id="time-sheet" class="row" th:fragment="time-sheet-fragment">
+
+
+
+                <div class="col border">
+                    <div th:each="time : ${mondaySchedule}" class="border">
+                        <div th:replace="schedule/create-fragments :: disTime(${time.startTime}, ${time.endTime})"></div>
+                    </div>
+                </div>
+                <div class="col border">
+                    <div th:each="time : ${tuesdaySchedule}" class="border">
+                        <div th:replace="schedule/create-fragments :: disTime(${time.startTime}, ${time.endTime})"></div>
+                    </div>
+                </div>
+                <div class="col border">
+                    <div th:each="time : ${wednesdaySchedule}" class="border">
+                        <div th:replace="schedule/create-fragments :: disTime(${time.startTime}, ${time.endTime})"></div>
+                    </div>
+                </div>
+                <div class="col border">
+                    <div th:each="time : ${thursdaySchedule}" class="border">
+                        <div th:replace="schedule/create-fragments :: disTime(${time.startTime}, ${time.endTime})"></div>
+                    </div>
+                </div>
+                <div class="col border">
+                    <div th:each="time : ${fridaySchedule}" class="border">
+                        <div th:replace="schedule/create-fragments :: disTime(${time.startTime}, ${time.endTime})"></div>
+                    </div>
+                </div>
+                <div class="col border">
+                    <div th:each="time : ${saturdaySchedule}" class="border">
+                        <div th:replace="schedule/create-fragments :: disTime(${time.startTime}, ${time.endTime})"></div>
+                    </div>
+                </div>
+                <div class="col border">
+                    <div th:each="time : ${sundaySchedule}" class="border">
+                        <div th:replace="schedule/create-fragments :: disTime(${time.startTime}, ${time.endTime})"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
