@@ -24,9 +24,14 @@ public class AvailableTimesService {
 
     }
 
+    public void removeAvailableTime(Long timeId,
+                                    Authentication authentication) {
+        RegisteredUser user = (RegisteredUser) authentication.getPrincipal();
+        availableTimesRepository.deleteByIdAndUser(timeId, user);
+    }
+
     public List<AvailableDateTime> getOrderedDaySchedule(DayOfWeek day, Authentication authentication) {
         RegisteredUser user = (RegisteredUser) authentication.getPrincipal();
         return availableTimesRepository.findAllByUser(user, day);
     }
-
 }

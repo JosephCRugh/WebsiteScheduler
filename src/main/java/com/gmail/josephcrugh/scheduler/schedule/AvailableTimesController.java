@@ -4,11 +4,13 @@ import com.gmail.josephcrugh.scheduler.schedule.db.AvailableDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
@@ -17,6 +19,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 @Controller
+@Transactional
 public class AvailableTimesController {
 
     @Autowired
@@ -67,12 +70,17 @@ public class AvailableTimesController {
         availableTimesService.addAvailableTime(availableDateTime, authentication);
 
         sendSchedule(authentication, model);
-
         return "/schedule/create :: time-sheet-fragment";
     }
 
-    @PostMapping("schedule/create/remove")
-    public String removeTime() {
-        return "/schedule/create";
+    @PostMapping("/schedule/create/remove/{timeId}")
+    public String removeTime(@PathVariable("timeId") Long timeId,
+                             Authentication authentication,
+                             Model model) {
+
+        availableTimesService.removeAvailableTime(timeId, authentication);
+
+        sendSchedule(authentication, model);
+        return "/schedule/create :: time-sheet-fragment";
     }
 }

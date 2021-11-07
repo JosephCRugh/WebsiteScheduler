@@ -32,9 +32,9 @@ public class AvailableDateTime {
     @Enumerated(EnumType.STRING)
     private DayOfWeek day;
     @NotNull
-    @DateTimeFormat(pattern = "HH:MM")
+    @DateTimeFormat(iso= DateTimeFormat.ISO.TIME)
     private LocalTime startTime;
     @NotNull
-    @DateTimeFormat(pattern = "HH:MM")
+    @DateTimeFormat(iso= DateTimeFormat.ISO.TIME)
     private LocalTime endTime;
 }

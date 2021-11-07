@@ -1,8 +1,6 @@
 function addTime(event) {
     event.preventDefault();
     let form = $('#add-form');
-    console.log("Sending over data!!")
-    console.log("url: " + form.attr('action'));
     $.ajax({
         type: "POST",
         url: form.attr('action'),
@@ -13,6 +11,17 @@ function addTime(event) {
             } else {
                 $('#time-sheet').replaceWith(response);
             }
+        }
+    });
+}
+
+function deleteTime(event) {
+    let timeId = $(event.target).attr('value');
+    $.ajax({
+        type: "POST",
+        url: "/schedule/create/remove/" + timeId,
+        success: function(response) {
+            $('#time-sheet').replaceWith(response);
         }
     });
 }

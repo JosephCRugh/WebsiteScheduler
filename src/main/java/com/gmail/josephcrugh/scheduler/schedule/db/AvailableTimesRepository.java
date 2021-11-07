@@ -16,4 +16,6 @@ public interface AvailableTimesRepository
     @Query("SELECT s FROM AvailableDateTime s WHERE s.user=?1 AND s.day=?2")
     List<AvailableDateTime> findAllByUser(RegisteredUser user, DayOfWeek day);
 
+    void deleteByIdAndUser(Long id, RegisteredUser user);
+
 }
