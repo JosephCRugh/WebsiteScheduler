@@ -61,11 +61,15 @@ public class AvailableTimesController {
         LocalTime endTime = availableDateTime.getEndTime();
         if (startTime.isAfter(endTime)) {
             bindingResult.addError(new FieldError("availableDateTime", "endTime",
-                    "Ending time must come first"));
+                    "Start time must come first"));
             return "/schedule/create :: add-form-fragment";
         }
 
-        // TODO: need to check to make sure the time-slot is conflicting
+        if (!availableTimesService.fitsInSchedule(availableDateTime, authentication)) {
+            bindingResult.addError(new FieldError("availableDateTime", "endTime",
+                    "Conflicts with schedule"));
+            return "/schedule/create :: add-form-fragment";
+        }
 
         availableTimesService.addAvailableTime(availableDateTime, authentication);
 

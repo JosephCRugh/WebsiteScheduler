@@ -34,4 +34,29 @@ public class AvailableTimesService {
         RegisteredUser user = (RegisteredUser) authentication.getPrincipal();
         return availableTimesRepository.findAllByUser(user, day);
     }
+
+    public boolean fitsInSchedule(AvailableDateTime time, Authentication authentication) {
+        List<AvailableDateTime> daySchedule = getOrderedDaySchedule(time.getDay(), authentication);
+        // Special case if there are no times
+        if (daySchedule.isEmpty()) return true;
+        // Special case if it is the first time
+        if (time.getEndTime().isBefore(daySchedule.get(0).getStartTime())) return true;
+
+        for (int i = 0; i < daySchedule.size(); i++) {
+            AvailableDateTime prevTime = daySchedule.get(i);
+            AvailableDateTime nextTime = null;
+            if (i + 1 < daySchedule.size()) {
+                nextTime = daySchedule.get(i + 1);
+            }
+            if (time.getStartTime().isAfter(prevTime.getEndTime())) {
+                if (nextTime == null ||
+                    time.getEndTime().isBefore(nextTime.getStartTime())
+                ) {
+                    return true;
+                }
+            }
+        }
+        // Exhausted the search
+        return false;
+    }
 }

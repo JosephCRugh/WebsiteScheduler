@@ -12,8 +12,7 @@ import java.util.List;
 public interface AvailableTimesRepository
         extends JpaRepository<AvailableDateTime, Long> {
 
-    // TODO: order
-    @Query("SELECT s FROM AvailableDateTime s WHERE s.user=?1 AND s.day=?2")
+    @Query("SELECT s FROM AvailableDateTime s WHERE s.user=?1 AND s.day=?2 ORDER BY start_time ASC")
     List<AvailableDateTime> findAllByUser(RegisteredUser user, DayOfWeek day);
 
     void deleteByIdAndUser(Long id, RegisteredUser user);
