@@ -17,7 +17,7 @@ public class RegistrationController {
     private final RegisteredUsersService registeredUsersService;
 
     @GetMapping("/register")
-    public String presentRegisterPage(RegisteredUser user) {
+    public String showRegisterPage(RegisteredUser user) {
         return "register";
     }
 
