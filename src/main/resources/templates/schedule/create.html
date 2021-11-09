@@ -49,58 +49,7 @@
             </div>
         </div>
         <div class="col border rounded p-0">
-            <table th:fragment="time-sheet-fragment" id="time-sheet" class="table border" style="height: 100%;">
-                <thead>
-                    <tr>
-                        <th>Monday</th>
-                        <th>Tuesday</th>
-                        <th>Wednesday</th>
-                        <th>Thursday</th>
-                        <th>Friday</th>
-                        <th>Saturday</th>
-                        <th>Sunday</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="p-0">
-                            <div th:each="time : ${mondaySchedule}" class="border">
-                                <div th:replace="schedule/create-fragments :: disTime(${time})"></div>
-                            </div>
-                        </td>
-                        <td class="p-0">
-                            <div th:each="time : ${tuesdaySchedule}" class="border">
-                                <div th:replace="schedule/create-fragments :: disTime(${time})"></div>
-                            </div>
-                        </td>
-                        <td class="p-0">
-                            <div th:each="time : ${wednesdaySchedule}" class="border">
-                                <div th:replace="schedule/create-fragments :: disTime(${time})"></div>
-                            </div>
-                        </td>
-                        <td class="p-0">
-                            <div th:each="time : ${thursdaySchedule}" class="border">
-                                <div th:replace="schedule/create-fragments :: disTime(${time})"></div>
-                            </div>
-                        </td>
-                        <td class="p-0">
-                            <div th:each="time : ${fridaySchedule}" class="border">
-                                <div th:replace="schedule/create-fragments :: disTime(${time})"></div>
-                            </div>
-                        </td>
-                        <td class="p-0">
-                            <div th:each="time : ${saturdaySchedule}" class="border">
-                                <div th:replace="schedule/create-fragments :: disTime(${time})"></div>
-                            </div>
-                        </td>
-                        <td class="p-0">
-                            <div th:each="time : ${sundaySchedule}" class="border">
-                                <div th:replace="schedule/create-fragments :: disTime(${time})"></div>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <table th:replace="schedule/time-sheet-fragments :: time-sheet-fragment"></table>
         </div>
     </div>
 </div>

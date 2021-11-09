@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -7,8 +8,12 @@
     <meta name="author" content="">
     <title>Select Time</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+    <script type="text/javascript" th:src="@{/js/select-time.js}"></script>
 </head>
 <body>
-<h1>This page will be dedicated to selecting an appointment time</h1>
+<table th:replace="schedule/time-sheet-fragments :: time-sheet-fragment"></table>
+<button id="confirm-button" onclick="confirmSchedule(event)" style="display: none;" class="btn btn-primary"
+        th:value="${email}">Confirm</button>
 </body>
 </html>

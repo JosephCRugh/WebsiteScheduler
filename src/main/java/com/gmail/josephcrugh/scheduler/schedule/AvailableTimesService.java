@@ -6,11 +6,13 @@ import com.gmail.josephcrugh.scheduler.schedule.db.AvailableTimesRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.DayOfWeek;
 import java.util.List;
 
 @Service
+@Transactional
 @AllArgsConstructor
 public class AvailableTimesService {
 
@@ -30,9 +32,13 @@ public class AvailableTimesService {
         availableTimesRepository.deleteByIdAndUser(timeId, user);
     }
 
+    public List<AvailableDateTime> getOrderedDaySchedule(DayOfWeek day, RegisteredUser user) {
+        return availableTimesRepository.findAllByUser(user, day);
+    }
+
     public List<AvailableDateTime> getOrderedDaySchedule(DayOfWeek day, Authentication authentication) {
         RegisteredUser user = (RegisteredUser) authentication.getPrincipal();
-        return availableTimesRepository.findAllByUser(user, day);
+        return getOrderedDaySchedule(day, user);
     }
 
     public boolean fitsInSchedule(AvailableDateTime time, Authentication authentication) {

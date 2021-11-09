@@ -1,0 +1,74 @@
+<div th:fragment="disTimeIntern(time)" xmlns:th="http://www.w3.org/1999/xhtml">
+
+</div>
+
+<div th:fragment="disTime(time)" xmlns:th="http://www.w3.org/1999/xhtml" style="cursor: pointer; font-size: 14px"
+     th:value="${time.getId()}"
+     name="time-box"
+     class="border"
+     onclick="timeSelected(event)"
+    >
+    <div th:with="st=${time.startTime}, et=${time.endTime}">
+        <label th:with="stH=${st.getHour()%12}, etH=${et.getHour()%12}, stM=${st.getMinute()}, etM=${et.getMinute()}">
+            [[${stH} < 10 ? '0' : '']][[${stH}]]:[[${stM} < 10 ? '0' : '']][[${stM}]] [[${st.getHour()>12 ? 'PM' : 'AM'}]] -
+            [[${etH} < 10 ? '0' : '']][[${etH}]]:[[${etM} < 10 ? '0' : '']][[${etM}]] [[${et.getHour()>12 ? 'PM' : 'AM'}]]
+        </label>
+        <i th:if="${scheduleState.name() == 'EDITING'}"
+                class="bi bi-trash" style="color:red; cursor: pointer;" th:value="${time.getId()}"
+           onclick="deleteTime(event)"></i>
+    </div>
+</div>
+
+<!-- Table for showing a User's Schedule -->
+<table th:fragment="time-sheet-fragment" id="time-sheet" class="table border" style="height: 100%;" xmlns:th="http://www.w3.org/1999/xhtml">
+    <thead>
+    <tr>
+        <th>Monday</th>
+        <th>Tuesday</th>
+        <th>Wednesday</th>
+        <th>Thursday</th>
+        <th>Friday</th>
+        <th>Saturday</th>
+        <th>Sunday</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="p-0">
+                <div th:each="time : ${mondaySchedule}">
+                    <div th:replace=":: disTime(${time})"></div>
+                </div>
+            </td>
+            <td class="p-0">
+                <div th:each="time : ${tuesdaySchedule}">
+                    <div th:replace=":: disTime(${time})"></div>
+                </div>
+            </td>
+            <td class="p-0">
+                <div th:each="time : ${wednesdaySchedule}">
+                    <div th:replace=":: disTime(${time})"></div>
+                </div>
+            </td>
+            <td class="p-0">
+                <div th:each="time : ${thursdaySchedule}">
+                    <div th:replace=":: disTime(${time})"></div>
+                </div>
+            </td>
+            <td class="p-0">
+                <div th:each="time : ${fridaySchedule}">
+                    <div th:replace=":: disTime(${time})"></div>
+                </div>
+            </td>
+            <td class="p-0">
+                <div th:each="time : ${saturdaySchedule}">
+                    <div th:replace=":: disTime(${time})"></div>
+                </div>
+            </td>
+            <td class="p-0">
+                <div th:each="time : ${sundaySchedule}">
+                    <div th:replace=":: disTime(${time})"></div>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>

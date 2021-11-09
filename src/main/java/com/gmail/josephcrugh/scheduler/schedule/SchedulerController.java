@@ -1,22 +1,22 @@
 package com.gmail.josephcrugh.scheduler.schedule;
 
-import com.gmail.josephcrugh.scheduler.registration.db.RegisteredUser;
 import com.gmail.josephcrugh.scheduler.registration.RegisteredUsersService;
-import lombok.AllArgsConstructor;
+import com.gmail.josephcrugh.scheduler.registration.db.RegisteredUser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Optional;
 
 @Controller
-@AllArgsConstructor
-public class SchedulerController {
+public class SchedulerController extends ScheduleDisplayController {
 
+    @Autowired
     private RegisteredUsersService registeredUsersService;
 
     @GetMapping("/schedule/search")
@@ -25,7 +25,7 @@ public class SchedulerController {
     }
 
     @GetMapping("/schedule/search/lookup")
-    public String findUserByEmailSearch(@RequestParam("email") final String email,
+    public String findUserByEmailSearch(@ModelAttribute("email") final String email,
                                         Authentication authentication,
                                         Model model) {
 
@@ -59,11 +59,27 @@ public class SchedulerController {
         return "schedule/search";
     }
 
-    @GetMapping("schedule/select-time/{email}")
-    public String selectScheduleTime(@PathVariable String email) {
+    @GetMapping("/schedule/select-time/{email}")
+    public String selectScheduleTime(@PathVariable String email, Model model) {
 
-        System.out.println("Setting up an appointment with email: " + email);
+        System.out.println("Fetching the schedule by email: " + email);
 
+        Optional<RegisteredUser> possibleScheduleWithUser = registeredUsersService.findUserByEmail(email.toLowerCase());
+        if (possibleScheduleWithUser.isEmpty()) {
+            // TODO: report error with there not being a user by that email
+            return "schedule/select-time";
+        }
+        RegisteredUser scheduleWithUser = possibleScheduleWithUser.get();
+
+        model.addAttribute("email", email);
+        sendSchedule(scheduleWithUser, model, ScheduleDisplayState.SELECTING_TIME);
         return "schedule/select-time";
+    }
+
+    @GetMapping("/schedule/confirm-schedule-select/{email}/{timeId}")
+    public String confirmScheduleSelect(@PathVariable String email, @PathVariable Long timeId) {
+        System.out.println("Confirming with email: " + email);
+        System.out.println("Confirming with timeID: " + timeId);
+        return "schedule/confirmation-page";
     }
 }
